@@ -19,7 +19,20 @@ The order of your output does not matter.
 
 class Solution {
 public:
-  vector<vector<string>> groupAnagrams(vector<string>& strs)
+  vector<vector<string>> groupAnagrams(vector<string>& strs) 
   {
+    unordered_map<wstring, vector<string>> map;
+    wstring histo(26, 0);
+    for (const string& s : strs){
+      for (char c : s) histo[c - 'a']++;//Increase the Counter of each letter
+      map[histo].push_back(move(s));
+      histo.assign(26, 0);
+    }
+
+    vector<vector<string>> result;
+    for (auto& kv : map)
+      result.push_back(move(kv.second));
+
+    return result;
   }
 };
